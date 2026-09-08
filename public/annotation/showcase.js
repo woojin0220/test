@@ -9,7 +9,7 @@ const scenes = [
     kind: 'Single-node perception',
     scene_id: 0,
     caption: 'On a rainy balcony, two friends chat and a violinist plays and moves across the space, punctuated by a nearby cough and jingling bells.',
-    mix_url: '/audio/rainy-balcony.flac', n_questions: 1,
+    mix_url: '../audio/rainy-balcony.flac', n_questions: 1,
     sources: [
       {id:1,cls:'speaker',transcription:"Listen, someone's playing violin out here in the rain.",onset:.5,offset:4.6,position:[-.6,0,-.5],moving:false},
       {id:2,cls:'speaker',transcription:"Yeah, it's beautiful. He's been walking toward the right side of the balcony.",onset:5.6,offset:10.2,position:[.7,0,-.6],moving:false},
@@ -24,7 +24,7 @@ const scenes = [
   {
     kind: 'Single-relation reasoning', scene_id: 1,
     caption:'In a spacious garage, two people chat and a vacuum cleaner rolls across the floor and a dog barks, with faint traffic noise from outside.',
-    mix_url:'/audio/garage-vacuum.flac',n_questions:1,
+    mix_url:'../audio/garage-vacuum.flac',n_questions:1,
     sources:[{id:1,cls:'speaker',transcription:'Can you hear that from outside?',onset:.5,offset:4.7,position:[.7,0,-.6],moving:false},{id:2,cls:'speaker',transcription:"It sounds like someone's cleaning the garage.",onset:4,offset:8.9,position:[.8,0,.7],moving:false},{id:3,cls:'Vacuum cleaner',onset:4.5,offset:11.5,position:[.6,-.2,.9],moving:true},{id:4,cls:'Dog',onset:9.2,offset:12.4,position:[-1.1,-.2,-.7],moving:false}],
     graph:{nodes:[],edges:[{source:1,target:2,causal:'result'},{source:2,target:3,causal:'cause'},{source:3,target:4,causal:'cause'}]},
     qa:[{question:'Which event directly causes the dog to bark?',options:{A:'Speaker A',B:'Speaker B',C:'Vacuum cleaner',D:'Traffic'},answer:'C'}]
@@ -32,7 +32,7 @@ const scenes = [
   {
     kind:'Multi-relation reasoning',scene_id:2,
     caption:'In a TV room, one person comments on a housefly buzzing past and a telephone rings and a kettle whistles in the background.',
-    mix_url:'/audio/tv-room.flac',n_questions:1,
+    mix_url:'../audio/tv-room.flac',n_questions:1,
     sources:[{id:1,cls:'telephone',onset:.5,offset:3.2,position:[.8,-.2,-.6],moving:false},{id:2,cls:'speaker',transcription:'Did you see that fly go by?',onset:3.4,offset:10,position:[-.7,0,-.6],moving:false},{id:3,cls:'Fly, housefly',onset:3.6,offset:7.5,position:[-.5,0,-.5],moving:false},{id:4,cls:'Kettle whistle',onset:10.3,offset:12.5,position:[.8,-.2,.8],moving:false}],
     graph:{nodes:[],edges:[{source:1,target:2,causal:'result'},{source:2,target:3,causal:'result'}]},
     qa:[{question:'What sequence best explains the speaker’s comment about the fly?',options:{A:'Fly → telephone → speaker',B:'Telephone → speaker → fly',C:'Kettle → fly → speaker',D:'Speaker → telephone → kettle'},answer:'B'}]
