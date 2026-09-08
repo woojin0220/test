@@ -20,7 +20,6 @@ export function createQAPanel(el, scene, vid, { readOnly = false } = {}) {
     qbody.innerHTML = `
       <p class="question">${q.question}</p>
       <div class="options">${opts}</div>
-      <p class="recorded-answer"><b>Recorded answer:</b> ${q.answer}</p>
       ${readOnly ? "" : `<div class="verdict">${["reasonable","unreasonable","unsure"].map(v => `<button data-v="${v}" class="${a.verdict===v?"sel":""}">${v}</button>`).join("")}</div><textarea id="note" placeholder="note (optional)">${a.note||""}</textarea>`}`;
     if (!readOnly) {
       qbody.querySelectorAll(".verdict button").forEach(b => b.addEventListener("click", () => save(b.dataset.v)));

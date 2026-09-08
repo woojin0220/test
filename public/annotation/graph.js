@@ -1101,21 +1101,18 @@ export function createGraphPanel(scene, vid, mounts) {
     relBox.classList.toggle("show-flags", showFlags);
 
     if (edges.length === 0) {
-      relBox.innerHTML = `<p class="rel-empty">No causal relations in this scene.<br>
-        <span class="rel-hint">Drag one circle onto another in the diagram to add one.</span></p>`;
+      relBox.innerHTML = `<p class="rel-empty">No causal relations in this scene.</p>`;
       return;
     }
 
     const byAnchor = [...edges].sort((a, b) => a.anchor - b.anchor || a.object - b.object);
     let lastAnchor = null;
-    const rows = [`<p class="rel-hint">anchor first &middot; arrow points from cause to effect<br>
-      drag one circle onto another to add a relation, or drag the other way to reverse one</p>`];
+    const rows = [];
     for (const e of byAnchor) {
       if (e.anchor !== lastAnchor) {
         rows.push(`<div class="rel-group-header">anchor ${e.anchorLabel || e.anchor}</div>`);
         lastAnchor = e.anchor;
       }
-      const checked = isFlagged(e.key, e.reason, e.result) ? "checked" : "";
       // The anchor is the cause exactly when the label says "cause".
       const anchorIsCause = e.reason === e.anchor;
       const anchorCls = anchorIsCause ? "rel-reason" : "rel-result";
@@ -1144,53 +1141,19 @@ export function createGraphPanel(scene, vid, mounts) {
       // a reversed one can be un-reversed or dropped entirely, which are
       // different intentions and so different buttons; an addition's undo and
       // its delete are the same act, so it gets one.
-      let lead;
-      if (e.edited === "removed") {
-        lead = `<button type="button" class="rel-act rel-act--restore" data-act="restore" data-key="${e.key}" title="put this relation back">&#8634;</button>`;
-      } else if (e.edited === "flipped") {
-        lead = `<button type="button" class="rel-act" data-act="undo" data-key="${e.key}" title="undo the reversal">&#8634;</button>`
-             + `<button type="button" class="rel-act" data-act="delete" data-key="${e.key}" title="remove this relation">&times;</button>`;
-      } else if (e.edited === "added") {
-        lead = `<button type="button" class="rel-act" data-act="delete" data-key="${e.key}" title="remove this relation">&times;</button>`;
-      } else {
-        lead = `<input type="checkbox" class="flag-cb" ${checked}>`
-             + `<button type="button" class="rel-act" data-act="delete" data-key="${e.key}" title="remove this relation">&times;</button>`;
-      }
+      const lead = "";
       const cls = e.edited === "removed" ? " rel-row--removed"
                 : e.edited ? " rel-row--edited" : "";
       rows.push(`
-        <label class="rel-row${cls}" data-key="${e.key}" data-reason="${e.reason}" data-result="${e.result}">
+        <div class="rel-row${cls}">
           ${lead}
           <span class="rel-text">
             <span class="rel-nodes"><span class="${anchorCls}">${e.anchorLabel || e.anchor}</span> ${arrow} <span class="${objectCls}">${e.objectLabel || e.object}</span></span>
             <span class="rel-label" title="${tagTitle}">${tag}</span>
           </span>
-        </label>`);
+        </div>`);
     }
     relBox.innerHTML = rows.join("");
-    relBox.querySelectorAll(".flag-cb").forEach((cb) => {
-      cb.addEventListener("change", (ev) => {
-        const row = ev.target.closest(".rel-row");
-        setFlagged(row.dataset.key, +row.dataset.reason, +row.dataset.result, ev.target.checked);
-        if (verdict) save(verdict);
-      });
-    });
-    relBox.querySelectorAll(".rel-act").forEach((b) => {
-      b.addEventListener("click", (ev) => {
-        // The row is a <label>; without this the click also toggles whatever
-        // control it wraps.
-        ev.preventDefault();
-        ev.stopPropagation();
-        const act = b.dataset.act;
-        const done = act === "delete" ? deleteRelation(b.dataset.key)
-                                      : undoEdit(b.dataset.key);
-        if (done) {
-          renderRelations();
-          redraw(lastT);
-          if (verdict) save(verdict);
-        }
-      });
-    });
   }
 
   function currentNote() {

@@ -44,7 +44,6 @@ const scene = scenes[sid] || scenes[0];
 scene.existing = {};
 window.__app = { api: async () => ({ completed:false }) };
 annotateScene(scene);
-document.getElementById('caption').textContent = `Caption: ${scene.caption}`;
 document.getElementById('sceneType').textContent = scene.kind;
 const mix = document.getElementById('mix'); mix.src = scene.mix_url;
 const panels = [];

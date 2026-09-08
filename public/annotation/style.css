@@ -319,12 +319,12 @@ button, input, textarea {
    causal list spans rows 2-3 and absorbs whatever is left. Easy to retune by
    adjusting these numbers. */
 #main[data-mode="graph"] .grid {
-  grid-template-columns: minmax(240px, 0.9fr) minmax(340px, 1.45fr) minmax(250px, 0.95fr);
+  grid-template-columns: minmax(280px, 1.15fr) minmax(300px, 1.25fr) minmax(250px, 0.95fr);
   grid-template-rows: minmax(0, 1.4fr) minmax(0, 0.9fr) minmax(0, 1.7fr);
   grid-template-areas:
-    "diagram map stems"
-    "diagram map transcript"
-    "causal  map verdict";
+    "diagram map verdict"
+    "diagram map verdict"
+    "causal  map transcript";
 }
 
 #main[data-mode="graph"] #mapPanel { grid-area: map; }
@@ -333,6 +333,9 @@ button, input, textarea {
 #main[data-mode="graph"] #stemsPanel { grid-area: stems; min-height: 0; }
 #main[data-mode="graph"] #transcriptPanel { grid-area: transcript; min-height: 0; }
 #main[data-mode="graph"] #graphRelPanel { display: flex; grid-area: verdict; min-height: 0; }
+
+/* Showcase only: graph and relation views are evidence, not annotation tools. */
+#graphCanvas { pointer-events: none; }
 
 /* Diagram column: the canvas wrap fills the whole panel body so the
    node-link diagram is as large as the (square-ish) column allows. */
