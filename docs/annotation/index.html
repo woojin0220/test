@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>BinauralLALM demo</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main id="main" data-mode="graph">
+      <header id="appbar">
+        <span class="brand">Audio Graph Demo</span>
+        <span class="badge" id="sceneType"></span>
+      </header>
+      <div id="sceneGrid" class="grid">
+        <section id="mapPanel" class="panel"><h3 class="panel-label">Spatial Map (top-down view)</h3><div class="panel-body panel-body--map"><canvas id="map"></canvas></div></section>
+        <section id="qaPanel" class="panel"><h3 class="panel-label">Scene Graph (causal relation)</h3><div class="panel-body" id="qaBody"></div></section>
+        <section id="transcriptPanel" class="panel"><h3 class="panel-label">Transcript</h3><div class="panel-body" id="transcriptBody"></div></section>
+        <section id="causalPanel" class="panel"><h3 class="panel-label">Causal Relations</h3><div class="panel-body" id="causalBody"></div></section>
+        <section id="graphRelPanel" class="panel"><h3 class="panel-label">QA sample</h3><div class="panel-body" id="graphRelBody"></div></section>
+      </div>
+      <div id="mixBar"><audio id="mix" controls preload="metadata"></audio><p class="shortcuts-hint">Read-only showcase · play the mix to synchronize the evidence panels</p></div>
+    </main>
+    <script type="module" src="./showcase.js"></script>
+  </body>
+</html>
