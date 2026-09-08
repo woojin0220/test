@@ -1,0 +1,1121 @@
+/* ---------- design tokens ---------- */
+:root {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --border: #e2e8f0;
+  --text: #0f172a;
+  --muted: #64748b;
+  --accent: #4f46e5;
+  --accent-dark: #4338ca;
+  --accent-soft: #eef2ff;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 16px;
+  --sp-4: 24px;
+  --shadow: 0 1px 2px rgba(15, 23, 42, .04), 0 4px 12px rgba(15, 23, 42, .06);
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden; /* the page itself never scrolls */
+}
+
+button, input, textarea {
+  font-family: inherit;
+}
+
+/* ---------- login screen ---------- */
+#login {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+}
+
+#login[hidden] { display: none; }
+
+.login-card {
+  width: 100%;
+  max-width: 340px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: var(--sp-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.login-card h2 {
+  margin: 0 0 var(--sp-1);
+  font-size: 18px;
+}
+
+.login-card label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.login-card input {
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  color: var(--text);
+}
+
+.login-card input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+/* ---------- main screen: full viewport, no page scroll ---------- */
+#main {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#main[hidden] { display: none; }
+
+#appbar {
+  flex: 0 0 auto;
+  padding: 10px var(--sp-3);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+#appbar .brand {
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: .01em;
+}
+
+#appbar .badge {
+  font-size: 12px;
+  color: var(--muted);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 2px 10px;
+}
+
+/* ---------- scene navigation bar ---------- */
+#appbar .scene-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-left: auto;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.scene-nav-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.scene-nav .nav-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 4px 10px;
+  font-size: 12.5px;
+  color: var(--text);
+  line-height: 1.2;
+  transition: background .15s ease;
+}
+
+.scene-nav .nav-btn:hover:not(:disabled) { background: var(--bg); }
+
+.scene-nav .nav-btn:disabled {
+  opacity: .4;
+  cursor: default;
+}
+
+.scene-nav .nav-btn.nav-go {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.scene-input {
+  width: 46px;
+  padding: 3px 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  text-align: center;
+  color: var(--text);
+}
+
+.scene-input::-webkit-outer-spin-button,
+.scene-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.scene-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.scene-done {
+  color: #16a34a;
+  font-weight: 700;
+}
+
+.scene-hint {
+  font-size: 11px;
+  color: #dc2626;
+  white-space: nowrap;
+}
+
+#captionBar {
+  flex: 0 0 auto;
+  padding: 10px var(--sp-3);
+  background: var(--accent-soft);
+  border-bottom: 1px solid var(--border);
+}
+
+#caption {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.4;
+}
+
+/* Master scene-mix playback bar: pinned as the last element of the #main
+   flex column, so it always sits at the bottom of the viewport, full width,
+   regardless of which view (validation grid or dashboard) is active above it. */
+#mixBar {
+  flex: 0 0 auto;
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+}
+
+#mix { width: 100%; display: block; }
+
+.shortcuts-hint {
+  margin: 6px 0 0;
+  font-size: 11px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.grid {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(260px, 0.75fr) 1.25fr;
+  gap: var(--sp-3);
+  padding: var(--sp-3);
+}
+
+.grid[hidden] { display: none; }
+
+/* Left column: spatial map only, stretched to the full height of the grid row. */
+#mapPanel { min-height: 0; }
+
+/* Right column (wider): QA on top (full width), then a row split into
+   transcript (left half) + stems (right half) below it. */
+.right-col {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+/* QA is sized to its content so it never needs its own scrollbar. */
+#qaPanel { flex: 0 0 auto; max-height: 100%; }
+
+/* Row below QA: transcript (left) + stems (right), side by side. */
+.right-row {
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: row;
+  gap: var(--sp-3);
+}
+
+/* Transcript + stems each take half the row and scroll internally if tight. */
+#transcriptPanel,
+#stemsPanel {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* Graph-mode-only panels (causal relation list; verdict + note). Hidden in QA
+   mode -- id selectors, so these beat the `.panel` class's `display: flex`
+   regardless of source order -- and only shown by the graph-mode override
+   below. */
+#causalPanel,
+#graphRelPanel { display: none; }
+
+/* ---------- graph-mode layout override ----------
+   Graph-validation mode arranges the panels in three columns:
+
+     +-------------+------------------+-----------------------+
+     | scene graph |                  | isolated sources + bg |
+     +-------------+   spatial map    +-----------------------+
+     |   causal    |   (widest col,   |      transcript       |
+     |  relations  |    full height)  +-----------------------+
+     |             |                  |       verdict         |
+     +-------------+------------------+-----------------------+
+
+   The spatial map is the center of attention (widest column, spanning every
+   row); the graph and the causal list it feeds sit together on the left; the
+   listening + judging controls all sit together on the right.
+
+   `.right-col`/`.right-row` are the QA-mode wrapper elements; setting them
+   to `display: contents` here un-boxes them so their children
+   (#qaPanel/#transcriptPanel/#stemsPanel/#causalPanel/#graphRelPanel) become
+   direct items of the outer `.grid`, which can then place them via
+   `grid-area` regardless of DOM nesting. Everything below is scoped under
+   `#main[data-mode="graph"]`, so QA mode (`data-mode="qa"`) is completely
+   unaffected. */
+#main[data-mode="graph"] .right-col,
+#main[data-mode="graph"] .right-row {
+  display: contents;
+}
+
+/* Column ratio ~ 0.9fr (graph/causal) : 1.45fr (map) : 0.95fr (listen/judge)
+   -- the map column is deliberately the widest, since it is the primary
+   thing being read.
+
+   Rows: two flexible rows plus a content-sized third row so the verdict block
+   is never squeezed. Row 1 is weighted 2fr because it carries the two panels
+   that need the most height -- the graph diagram (circular, so its useful
+   size is bounded by the SMALLER of its width/height: at ~1fr it came out
+   noticeably shorter than its column is wide, wasting radius) and the stem
+   list (one row per source plus the diffuse track, which overflowed at 1fr).
+   Row 2 carries the transcript, which is only ever a handful of lines. The
+   causal list spans rows 2-3 and absorbs whatever is left. Easy to retune by
+   adjusting these numbers. */
+#main[data-mode="graph"] .grid {
+  grid-template-columns: minmax(240px, 0.9fr) minmax(340px, 1.45fr) minmax(250px, 0.95fr);
+  grid-template-rows: minmax(0, 1.4fr) minmax(0, 0.9fr) minmax(0, 1.7fr);
+  grid-template-areas:
+    "diagram map stems"
+    "diagram map transcript"
+    "causal  map verdict";
+}
+
+#main[data-mode="graph"] #mapPanel { grid-area: map; }
+#main[data-mode="graph"] #qaPanel { grid-area: diagram; min-height: 0; }
+#main[data-mode="graph"] #causalPanel { display: flex; grid-area: causal; min-height: 0; }
+#main[data-mode="graph"] #stemsPanel { grid-area: stems; min-height: 0; }
+#main[data-mode="graph"] #transcriptPanel { grid-area: transcript; min-height: 0; }
+#main[data-mode="graph"] #graphRelPanel { display: flex; grid-area: verdict; min-height: 0; }
+
+/* Diagram column: the canvas wrap fills the whole panel body so the
+   node-link diagram is as large as the (square-ish) column allows. */
+#main[data-mode="graph"] #qaBody {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+#main[data-mode="graph"] .graph-diagram-wrap {
+  flex: 1 1 auto;
+  height: auto;
+  min-height: 0;
+}
+
+/* Causal-relations panel: the list grows to fill the panel's height and
+   scrolls internally when long.
+
+   `#causalBody` overrides `.panel-body`'s `overflow: auto` with `hidden`: the
+   panel body must not become a second scroll container -- only the list
+   itself scrolls. Without this, the outer body and the inner list both being
+   scrollable produces two nested scrollbars for one list. `min-height: 0`
+   keeps it correctly shrinkable within `#causalPanel`'s grid-area (a
+   fixed-height flex column). */
+#causalBody {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  padding: var(--sp-2);
+}
+
+#causalBody .graph-relations {
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: none;
+  margin-bottom: 0;
+}
+
+/* Verdict panel: buttons + note stacked, both at their natural size.
+   `flex: 0 0 auto` stops the flex algorithm from shrinking them under space
+   pressure. This matters especially for `.verdict`, which has
+   `overflow: hidden` (for its segmented-button rounding) -- an element with
+   non-visible overflow gets an automatic flex-shrink floor of 0 instead of
+   its content size, so without this override it can be squeezed below its
+   button height and visibly clipped. Scoped to `#graphRelBody` only, so the
+   QA panel (which reuses the same `.verdict`/`#note` markup/classes,
+   unwrapped by this id) is completely unaffected. */
+#graphRelBody {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  /* The verdict block used to sit in an `auto` grid row, so its two
+     instruction paragraphs grew the row and took the height straight out of
+     the diagram (406px -> 251px) and the transcript (203px -> 125px). The row
+     is a bounded fraction now and this scrolls instead, so the panels above
+     keep their size whatever the instructions say. */
+  overflow: auto;
+}
+
+#graphRelBody .verdict,
+#graphRelBody #note {
+  flex: 0 0 auto;
+}
+
+/* ---------- panel/card system ---------- */
+.panel {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.panel-label {
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 8px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+
+.panel-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto; /* panels scroll internally, the page never does */
+  padding: var(--sp-3);
+}
+
+.panel-body--map {
+  padding: 0;
+  display: flex;
+}
+
+.panel-body--qa {
+  padding: 10px var(--sp-3);
+}
+
+#map { display: block; width: 100%; height: 100%; }
+
+/* ---------- buttons ---------- */
+button {
+  cursor: pointer;
+}
+
+#start, .btn-primary {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 9px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background .15s ease;
+}
+
+#start:hover, .btn-primary:hover { background: var(--accent-dark); }
+
+#nextScene[hidden] { display: none; }
+
+.btn-secondary {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  transition: background .15s ease;
+}
+
+.btn-secondary:hover { background: var(--bg); }
+
+/* ---------- dashboard ---------- */
+#dashboard {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  padding: var(--sp-3);
+  overflow: auto;
+}
+
+#dashboard[hidden] { display: none; }
+
+.dashboard-header {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dashboard-header h2 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.dashboard-actions {
+  display: flex;
+  gap: var(--sp-2);
+}
+
+.dashboard-grid {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: min-content;
+  gap: var(--sp-3);
+  overflow: auto;
+}
+
+.dash-card--wide { grid-column: 1 / -1; }
+
+.progress-track {
+  width: 100%;
+  height: 14px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: var(--sp-2);
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+  transition: width .3s ease;
+}
+
+.dash-stat {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.dash-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-size: 13px;
+  border-bottom: 1px solid var(--border);
+}
+
+.dash-row:last-child { border-bottom: none; }
+
+.dash-row--total {
+  margin-top: 4px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--border);
+  font-weight: 700;
+  border-bottom: none;
+}
+
+.dash-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.dash-table th, .dash-table td {
+  text-align: left;
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.dash-table th {
+  color: var(--muted);
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.dash-ranges {
+  color: var(--muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  max-width: 320px;
+  overflow-wrap: break-word;
+}
+
+.dash-empty {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* ---------- binned coverage strips ----------
+   A strip is a fixed number of bins (<= 60), never one cell per scene, so it
+   stays compact and readable regardless of dataset size. Shading is applied
+   inline (per-cell ratio), these rules just give each cell its shape/rhythm. */
+.coverage-strip {
+  display: flex;
+  width: 100%;
+  gap: 2px;
+}
+
+.coverage-cell {
+  flex: 1 1 0;
+  min-width: 3px;
+  height: 22px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  box-sizing: border-box;
+}
+
+.coverage-cell.has-double {
+  border-top: 3px solid var(--accent-dark);
+}
+
+.coverage-strip--sm .coverage-cell {
+  height: 12px;
+  border-radius: 1px;
+}
+
+.validator-strips {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  margin-top: var(--sp-3);
+  padding-top: var(--sp-3);
+  border-top: 1px solid var(--border);
+}
+
+.validator-strip-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.validator-strip-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+/* ---------- QA panel ---------- */
+#qnav {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-2);
+}
+
+#qnav button {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 3px 10px;
+  font-size: 13px;
+  color: var(--text);
+}
+
+#qnav button:hover { background: var(--bg); }
+
+#qpos {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.question {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 8px;
+  line-height: 1.35;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+.qopt {
+  padding: 6px 9px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 12.5px;
+  line-height: 1.3;
+  background: var(--surface);
+}
+
+.qopt.correct {
+  font-weight: 700;
+  background: var(--accent-soft);
+  border-color: #c7d2fe;
+}
+
+.recorded-answer {
+  margin: 0 0 8px;
+  font-size: 12.5px;
+}
+
+/* segmented verdict control */
+.verdict {
+  display: flex;
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin: 0 0 8px;
+}
+
+.verdict button {
+  flex: 1 1 0;
+  text-align: center;
+  border: none;
+  border-right: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  padding: 6px 12px;
+  font-size: 12.5px;
+  font-weight: 500;
+  transition: background .15s ease, color .15s ease;
+}
+
+.verdict button:last-child { border-right: none; }
+.verdict button:hover { background: var(--bg); }
+
+.verdict button.sel {
+  background: var(--accent);
+  color: #fff;
+}
+
+#note {
+  width: 100%;
+  min-height: 44px;
+  margin-top: 0;
+  padding: 6px 9px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 12.5px;
+  font-family: inherit;
+  resize: vertical;
+}
+
+#note:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+/* ---------- scene-graph validation panel ---------- */
+.graph-diagram-wrap {
+  position: relative;
+  height: 210px;
+  flex: 0 0 auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  margin-bottom: var(--sp-2);
+  overflow: hidden;
+}
+
+#graphCanvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+
+
+
+
+/* Causal relation list: scrolls internally so the panel never forces page
+   scroll. Only relations with a causal label appear here -- "independent"
+   ones are dropped by causalEdges() in graph.js -- and every row reads
+   left-to-right as "reason object -> result object". */
+.graph-relations {
+  max-height: 160px;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  margin-bottom: 8px;
+}
+
+.rel-empty {
+  margin: 0;
+  padding: 10px;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+.rel-group-header {
+  padding: 5px 9px 2px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  border-top: 1px solid var(--border);
+}
+
+.rel-group-header:first-child { border-top: none; }
+
+.rel-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 5px 9px;
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+  line-height: 1.4;
+  cursor: default;
+}
+
+.rel-row:last-child { border-bottom: none; }
+.rel-row:hover { background: var(--bg); }
+
+.flag-cb {
+  display: none;
+  margin-top: 2px;
+  flex: 0 0 auto;
+  cursor: pointer;
+}
+
+.graph-relations.show-flags .flag-cb { display: inline-block; }
+
+/* A relation the validator drew or turned round. Tinted rather than badged, so
+   a corrected list can be read at a glance without hunting for markers, and in
+   the same hue the diagram uses for those arrows. */
+.rel-row--edited {
+  background: #f0fdfa;
+  box-shadow: inset 3px 0 0 #0d9488;
+}
+
+.rel-row--edited:hover { background: #ccfbf1; }
+.rel-row--edited .rel-label { color: #0f766e; font-weight: 600; }
+
+/* Undo takes the checkbox's place on an edited row: the way to disown a
+   correction you made is to take it back, not to tick it as suspect. Always
+   visible, unlike the flag checkbox, because an accidental drag has to be
+   reversible whatever the verdict says. */
+.rel-undo {
+  flex: 0 0 auto;
+  margin-top: 1px;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: 1px solid #99f6e4;
+  border-radius: 4px;
+  background: #fff;
+  color: #0d9488;
+  font-size: 12px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.rel-act {
+  flex: 0 0 auto;
+  margin-top: 1px;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: #fff;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.rel-act:hover { background: #dc2626; border-color: #dc2626; color: #fff; }
+.rel-row--edited .rel-act { border-color: #99f6e4; color: #0d9488; }
+.rel-row--edited .rel-act:hover { background: #0d9488; border-color: #0d9488; color: #fff; }
+.rel-act--restore:hover { background: #0d9488; border-color: #0d9488; color: #fff; }
+
+/* A relation the validator removed. It stays on the list rather than
+   disappearing, struck through and with its way back, so a mis-click costs one
+   click instead of a reload. The diagram leaves it out. */
+.rel-row--removed { background: #fafafa; }
+.rel-row--removed .rel-nodes,
+.rel-row--removed .rel-label {
+  text-decoration: line-through;
+  color: var(--muted);
+  font-weight: 400;
+}
+.rel-row--removed .rel-nodes span { color: var(--muted); }
+
+.rel-text { flex: 1 1 auto; min-width: 0; }
+
+.rel-nodes { font-weight: 600; color: var(--text); }
+
+.rel-sep {
+  color: var(--muted);
+  margin: 0 3px;
+}
+
+/* One-line key at the top of the causal list. The anchor-first ordering and
+   the two arrow glyphs are only obvious once stated, and stating it is what
+   makes each row checkable against the label. */
+.rel-hint {
+  margin: 0;
+  padding: 5px 9px;
+  font-size: 10.5px;
+  color: var(--muted);
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+
+/* Reason and result are color-coded so the direction of each row is readable
+   at a glance without re-reading the arrow. Same red as the diagram's arrows
+   (CAUSAL_COLOR in graph.js) for the reason side. */
+.rel-reason { color: #b91c1c; }
+.rel-result { color: #1d4ed8; }
+
+/* The raw "Causal Relation" word ("cause" / "result") from the label. Kept
+   deliberately quiet -- a small neutral pill, not another color-coded
+   dimension -- because it does NOT set the arrow direction (the anchor is the
+   reason either way, see ANCHOR_IS_REASON in graph.js). It is shown so a
+   validator can notice when the wording disagrees with what they hear. */
+.rel-label {
+  display: inline-block;
+  margin-left: 5px;
+  padding: 0 5px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .03em;
+  color: var(--muted);
+  vertical-align: 1px;
+}
+
+
+/* Compact note field: the verdict column now carries two instruction blocks,
+   so the textarea takes only what it needs. */
+#graphRelBody #note { min-height: 34px; margin-bottom: 0; }
+
+/* ---------- transcript ---------- */
+.transcript div {
+  padding: 6px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 2px;
+}
+
+.transcript .active {
+  background: var(--accent-soft);
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* ---------- stem players ---------- */
+.stem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 4px;
+}
+
+.stem:hover { background: var(--bg); }
+
+.stem button {
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  transition: background .15s ease, color .15s ease, border-color .15s ease;
+}
+
+.stem button.playing {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+/* Fixed width, not content width: every waveform has to start at the same x
+   or the rows stop sharing a time axis, and a stack of clips you cannot read
+   across is the thing this panel exists to avoid. Long names ellipsize; the
+   full one is in the tooltip. */
+.stem-label {
+  flex: 0 0 150px;
+  width: 150px;
+  font-size: 12px;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Positioned, so the playhead can be a rule laid over the peaks rather than
+   something redrawn into them every frame. */
+.stem-wave-wrap {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 40px;
+}
+
+.stem-wave {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.stem-playhead {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--accent);
+  pointer-events: none;
+  display: none;
+}
+
+/* ---------- two-dimension verdict panel (graph mode) ---------- */
+/* Scene Plausibility and Audio Source Plausibility are separate judgements
+   with separate storage slots, so they read as two labelled blocks rather than
+   one row of buttons. */
+/* They are PAGES, not a stack. This is the shortest column in the graph
+   layout, and stacking the two instruction blocks pushed the source buttons
+   below the fold: reaching “all reasonable” meant scrolling a ~200px box. One
+   dimension on screen at a time, arrows to move between them. */
+.dims { display: flex; flex-direction: column; min-height: 0; }
+
+.dims-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.dim-nav {
+  padding: 1px 9px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.dim-nav:hover:not(:disabled) { background: var(--bg); }
+.dim-nav:disabled { opacity: .35; cursor: default; }
+
+.dim-step { font-size: 10.5px; color: var(--muted); }
+
+.dims-view { overflow: hidden; }
+
+/* The track is as tall as its TALLER page (align-items: flex-start keeps each
+   page at its own height), so paging never makes the panel jump. */
+.dims-track {
+  display: flex;
+  align-items: flex-start;
+  transition: transform .22s ease;
+}
+
+.dim { flex: 0 0 100%; min-width: 0; }
+
+.dim-title {
+  margin: 0 0 3px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.dim-help {
+  margin: 0 0 6px;
+  font-size: 10.5px;
+  line-height: 1.35;
+  color: var(--muted);
+}
+
+/* One button per source, wrapping freely: a scene can have a handful and the
+   column is narrow. Selected means "this one does NOT match its label", which
+   is why the selected state is a warning colour rather than the accent. */
+.src-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.src-btn {
+  padding: 4px 9px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  font-size: 12px;
+  color: var(--text);
+  transition: background .15s ease, border-color .15s ease, color .15s ease;
+}
+
+.src-btn:hover { background: var(--bg); }
+
+.src-btn.sel {
+  background: #fee2e2;
+  border-color: #dc2626;
+  color: #991b1b;
+  font-weight: 600;
+}
+
+/* "all reasonable" is the opposite claim, so it reads green when chosen. */
+.src-btn--all.sel {
+  background: #dcfce7;
+  border-color: #16a34a;
+  color: #14532d;
+}
